@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>iantom.com</title>
+	<link rel="stylesheet" type="text/css" href="/static/main.css" media="screen" />
+	<script type="text/javascript" language="JavaScript" src="/static/jquery.js"></script>
+	<script type="text/javascript" language="JavaScript" src="/static/jquery-ui.js"></script>
+	<script type="text/javascript" language="JavaScript" src="/static/common.js"></script>
+	{% block extra_css %} {% endblock extra_css %}
+	{% block extra_js %} {% endblock extra_js %}
+</head>
+<body>
+	<section id="container">
+		{% block content %} {% endblock content %}
+	</section>
+	<footer>&copy; John DiMona, 2011.  All Rights Reserved.</footer>
+</body>
+</html>

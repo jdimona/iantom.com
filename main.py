@@ -4,12 +4,11 @@ import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-class MainHandler(webapp.RequestHandler):
+import utilities
+
+class MainHandler(utilities.BaseRequestHandler):
     def get(self):
-        self.response.headers['Content-Type'] = 'text/html'
-        self.response.out.write("<html><body>")
-        self.response.out.write("<p>Welcome to iantom.com!</p>")
-        self.response.out.write("</body></html>")
+        self.render_to_response('templates/main.html')
 
 def main():
     _logger = logging.getLogger()
