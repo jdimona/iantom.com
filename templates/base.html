@@ -12,7 +12,20 @@
 </head>
 <body>
 	<section id="container">
-		{% block content %} {% endblock content %}
+		<section id="sidebar">
+			<header>Ian Thomas Jansen-Lonnquist Photography</header>
+			<nav>
+				<ul>
+					{% for nav in nav_list %}
+						<li id="{{ nav.id }}">{{ nav.title }}</li>
+					{% endfor %}
+					<li id="about">About</li>
+				</ul>
+			</nav>
+		</section>
+		<section id="main">
+			{% block content %} {% endblock content %}
+		</section>
 	</section>
 	<footer>&copy; John DiMona, 2011.  All Rights Reserved.</footer>
 </body>

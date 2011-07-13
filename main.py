@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import django_set_version
 import logging
 
