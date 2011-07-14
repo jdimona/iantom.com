@@ -1,5 +1,41 @@
-{% extends "base.html" %}
-
-{% block content %}
-<p>Welcome to iantom.com</p>
-{% endblock content %}
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<title>iantom.com</title>
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" type="text/css" href="/static/css/main.css" media="screen" />
+	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/javascript/jquery-history.js"></script>
+	<script type="text/javascript" src="/static/javascript/jquery-color-animations.js"></script>
+	<script type="text/javascript" src="/static/javascript/common.js"></script>
+</head>
+<body>
+	<section id="container">
+		<header><h1>Ian Thomas Jansen-Lonnquist Photography</h1></header>
+		<section id="left-sidebar">
+			<nav id="album-nav">
+				{% for album in album_list %}
+					<a class="nav-link" href="#{{ album.index  }}">{{ album.title }}</a>
+				{% endfor %}
+				<a class="nav-link" href="#about">Example Album #1</a>
+				<a class="nav-link" href="#about">Example Album #2</a>
+				<a class="nav-link" href="#about">Example Album #3</a>
+				<a class="nav-link" href="#about">Example Album #4</a>
+				<a class="nav-link" href="#about">Example Album #5</a>
+				<a class="nav-link" href="#about">Example Album #6</a>
+				<a class="nav-link" href="#about">Example Album #7</a>
+				<a class="nav-link" href="#about">Example Album #8</a>
+				<a class="nav-link last" href="#about">About ITJL Photography</a>
+			</nav>
+		</section>
+		<section id="viewer">
+		</section>
+		<section id="bottom-bar">
+			<nav id="slideshow-nav">
+				<span class="conrols"></span>
+			</nav>
+		</section>
+	</section>
+</body>
+</html>

@@ -6,11 +6,13 @@ import logging
 from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
-import utilities
+from utilities import utilities
+import model
 
 class MainHandler(utilities.BaseRequestHandler):
     def get(self):
-        self.render_to_response('templates/main.html')
+        albums = model.Album.all().order('-index').fetch(15)
+        self.render_to_response('templates/main.html', {'albums': albums})
 
 def main():
     _logger = logging.getLogger()
@@ -19,6 +21,7 @@ def main():
     apps_binding = []
     
     apps_binding.append(('/', MainHandler))
+    apps_binding.extend(model.apps_bindings())
     
     
     application = webapp.WSGIApplication(apps_binding, debug=True)
