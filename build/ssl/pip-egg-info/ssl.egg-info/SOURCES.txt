@@ -1,7 +1,0 @@
-pip-egg-info/ssl.egg-info/PKG-INFO
-pip-egg-info/ssl.egg-info/SOURCES.txt
-pip-egg-info/ssl.egg-info/dependency_links.txt
-pip-egg-info/ssl.egg-info/top_level.txt
-ssl/__init__.py
-ssl/_ssl2.c
-test/test_ssl.py

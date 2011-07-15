@@ -1,6 +1,9 @@
 
 body {
 	padding-top:10px;
+	padding-left:0px;
+	padding-right:0px;
+	padding-bottom:0px;
 	font-family: Verdana;
 	background: #000000;
 }
@@ -40,7 +43,12 @@ h1 {
 
 
 #bottom-bar {
-	height: 200px;
+	height: 70px;
+	width: 100%;
+	position: absolute;
+	bottom:0px;
+	left:0px;
+	background: #4F4F4F;
 }
 
 
