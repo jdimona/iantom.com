@@ -29,6 +29,7 @@ class Album(dbRoot):
     title = db.StringProperty()
     info = db.StringProperty()
     photos = db.ListProperty(db.Key)
+    numPhotos = db.IntegerProperty()
     index = db.IntegerProperty()
     @classmethod
     def new(cls, newTitle, newInfo, newIndex, newPhotos = []):
@@ -50,16 +51,17 @@ class Photo(dbRoot):
 """ 
 class RPCMethods(rpc.RPCMethods):
     def get_main(self, sess):
-        return
+        templ = sess.template_path('templates/photo.html')
+        html = template.render(templ, {})
+        return html
     
     def get_about(self, sess):
-        return
-    
-    def get_albums(self, sess):
-        return
+        templ = sess.template_path('templates/text.html')
+        html = template.render(templ, {})
+        return html
     
     def get_photo(self, sess, album, index):
-        return
+        return "hi", 10
     
     def create_album(self, sess, title, info, index):
         return

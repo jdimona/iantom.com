@@ -16,16 +16,16 @@
 		<section id="left-sidebar">
 			<nav id="album-nav">
 				{% for album in album_list %}
-					<a class="nav-link" href="#{{ album.index  }}">{{ album.title }}</a>
+					<a class="nav-link" href="#{{ album.index  }}-1">{{ album.title }}</a>
 				{% endfor %}
-				<a class="nav-link" href="#about">Example Album #1</a>
-				<a class="nav-link" href="#about">Example Album #2</a>
-				<a class="nav-link" href="#about">Example Album #3</a>
-				<a class="nav-link" href="#about">Example Album #4</a>
-				<a class="nav-link" href="#about">Example Album #5</a>
-				<a class="nav-link" href="#about">Example Album #6</a>
-				<a class="nav-link" href="#about">Example Album #7</a>
-				<a class="nav-link" href="#about">Example Album #8</a>
+				<a class="nav-link" href="#1-1">Example Album #1</a>
+				<a class="nav-link" href="#2-1">Example Album #2</a>
+				<a class="nav-link" href="#3-1">Example Album #3</a>
+				<a class="nav-link" href="#4-1">Example Album #4</a>
+				<a class="nav-link" href="#5-1">Example Album #5</a>
+				<a class="nav-link" href="#6-1">Example Album #6</a>
+				<a class="nav-link" href="#7-1">Example Album #7</a>
+				<a class="nav-link" href="#8-1">Example Album #8</a>
 				<a class="nav-link last" href="#about">About ITJL Photography</a>
 			</nav>
 		</section>
@@ -34,7 +34,7 @@
 	</section>
 	<section id="bottom-bar">
 			<nav id="slideshow-nav">
-				<span id="conrols"><a href="">< prev</a> <span id="curent-picture-index">0</span>/<span id="total-pictures">0</span> <a href="">next ></a></span>
+				<span id="controls"><a id="prev" href="#">< prev</a> <span id="current-picture-index">0</span>/<span id="total-pictures">0</span> <a id="next" href="#">next ></a></span>
 			</nav>
 	</section>
 	
