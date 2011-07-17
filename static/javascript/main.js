@@ -19,7 +19,7 @@ jQuery(document).ready(function($) {
     		$ajax('portfolio', 'get_main', [], function(html) {
     			$('#viewer').html(html);
     			if($('#bottom-bar').css('display') != "none") {
-    				$('#bottom-bar').slideDown('slow');
+    				$('#bottom-bar').slideDown(500);
     			}
     		});
     	} 
@@ -27,7 +27,7 @@ jQuery(document).ready(function($) {
     		$ajax('portfolio', 'get_about', [], function(html) {
     			$('#viewer').html(html);
     			if($('#bottom-bar').css('display') != "none") {
-    				$('#bottom-bar').slideToggle('slow');
+    				$('#bottom-bar').slideToggle(500);
     			}
     		});
     	}
@@ -48,7 +48,7 @@ jQuery(document).ready(function($) {
     				$('#next').addClass('disabled');
     			}
     			if($('#bottom-bar').css('display') == "none") {
-    				$('#bottom-bar').slideToggle('slow');
+    				$('#bottom-bar').slideToggle(500);
     			}
     		});
     	}

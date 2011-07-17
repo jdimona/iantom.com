@@ -18,6 +18,7 @@ class dbRoot(db.Model):
     changed = db.DateTimeProperty(auto_now = True)
     updated = property(lambda s: str(s.changed.strftime('%a, %d %b %Y %H:%M')))        
     started = property(lambda s: str(s.created.strftime('%d %b %Y')))
+    dbKey = property(lambda s: str(s.key()))
     @classmethod
     def new(cls, **kwargs):
         key_name = utilities.getUUID()
@@ -32,16 +33,17 @@ class Album(dbRoot):
     numPhotos = db.IntegerProperty()
     index = db.IntegerProperty()
     @classmethod
-    def new(cls, newTitle, newInfo, newIndex, newPhotos = []):
-        super(Album, cls).new(title = newTitle, info = newInfo, index = newIndex, photos = newPhotos)
+    def new(cls, newTitle, newInfo, newIndex, newNumPhotos = 0, newPhotos = []):
+        super(Album, cls).new(title = newTitle, info = newInfo, index = newIndex, numPhotos = newNumPhotos, photos = newPhotos)
     
 class Photo(dbRoot):
     image = blobstore.BlobReferenceProperty()
     caption = db.StringProperty()
+    textOnly = db.BooleanProperty()
     index = db.IntegerProperty()
     @classmethod
-    def new(cls, newImage, newCaption, newIndex):
-        super(Album, cls).new(image = newImage, caption = newCaption, index = newIndex)
+    def new(cls, newImage, newCaption, newTextOnly, newIndex):
+        super(Album, cls).new(image = newImage, caption = newCaption, textOnly = newTextOnly, index = newIndex)
     
 
 
@@ -62,22 +64,11 @@ class RPCMethods(rpc.RPCMethods):
     
     def get_photo(self, sess, album, index):
         return "hi", 10
-    
-    def create_album(self, sess, title, info, index):
-        return
-    
-    def delete_album(self, sess, album):
-        return
-    
-    def create_photo(self, sess, imageFile, caption, index):
-        return
-    
-    def delete_photo(self, sess, photo):
-        return
 
 
 class RPC(rpc.RPCHandler):
     _m = RPCMethods
+
 
 
 

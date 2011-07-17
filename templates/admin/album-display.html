@@ -1,0 +1,15 @@
+
+
+<ul id="sortable">
+	{% for slide in slides %}
+		<li id="{{ slide.dbKey }}" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+			{% if slide.textOnly %}
+			<span class="slide-text">{{ slide.caption }}</span>
+			{% else %}
+			<img alt="{{ slide.caption }}" src="{{ slide.picUrl }}">
+			<a href="#" onclick="return removeSlide('{{ slide.dbKey }}')">Remove</a>
+		</li>
+	{% endfor %}
+</ul>
+<button id="new-slide-button" onclick="return newSlide()">New Slide</button>
+

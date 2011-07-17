@@ -8,10 +8,11 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 
 from utilities import utilities
 import model
+import admin
 
 class MainHandler(utilities.BaseRequestHandler):
     def get(self):
-        albums = model.Album.all().order('-index').fetch(15)
+        albums = model.Album.all().order('index').fetch(20)
         self.render_to_response('templates/main.html', {'albums': albums})
 
 def main():
@@ -22,6 +23,7 @@ def main():
     
     apps_binding.append(('/', MainHandler))
     apps_binding.extend(model.apps_bindings())
+    apps_binding.extend(admin.apps_bindings())
     
     
     application = webapp.WSGIApplication(apps_binding, debug=True)
