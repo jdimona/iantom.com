@@ -1,15 +1,46 @@
 
 
-<ul id="sortable">
+<ul id="b_sortable">
 	{% for slide in slides %}
 		<li id="{{ slide.dbKey }}" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
 			{% if slide.textOnly %}
-			<span class="slide-text">{{ slide.caption }}</span>
+			{{ slide.caption }}
 			{% else %}
 			<img alt="{{ slide.caption }}" src="{{ slide.picUrl }}">
-			<a href="#" onclick="return removeSlide('{{ slide.dbKey }}')">Remove</a>
+			{% endif %}
+			<a href="#" onclick="return removeSlide('{{ slide.dbKey }}')">*Remove Slide*</a>
 		</li>
 	{% endfor %}
 </ul>
 <button id="new-slide-button" onclick="return newSlide()">New Slide</button>
-
+<button id="set-slide-order-button" onclick="return setPhotoOrder()">Set Ordering</button>
+<br />
+<a href="/admin">Back to Albums</a>
+<div id="slidePopup" title="New Slide" style="text-align: left; width=450px; display: none;">
+	<form id='slideForm' action="{{ upload_url }}" method="POST" enctype="multipart/form-data">
+	<fieldset>
+	<table style="width: 400px; ">
+		<tr>
+		<td><label style="width: 150px;" for="file">Image</label></td>
+		<td><input type="file" style="width: 250px;" name="file" class="photo-image" title="Image" tabIndex="100" /></td>
+		</tr>
+		<br /><br />
+		<tr>
+		<td><label style="width: 150px;" for="caption">Caption</label></td>
+		<td><textarea name="caption" class="photo-caption" tabIndex="101" size="1000" maxlength="500" title="Photo Caption" ></textarea></td></tr>
+		<tr>
+		<td><label style="width: 150px;" for="textOnly">Text Only?</label></td>
+		<td><input type="checkbox" name="textOnly" value="true" /></td>
+		</tr>
+	</table>
+	<input id="album-to-add-to" type="text" name="albumKey" style="display: none;" />
+	</fieldset>
+	<input type="submit" name="submit" value="Submit">
+	</form>
+</div>
+<div id="dialog-confirm-photo" title="Delete Photo?" style="display: none;">
+	<p>
+		<span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
+		This item will be permanently deleted and cannot be recovered. Are you sure?
+	</p>
+</div>

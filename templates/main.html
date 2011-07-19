@@ -15,17 +15,9 @@
 		<header><h1>Ian Thomas Jansen-Lonnquist Photography</h1></header>
 		<section id="left-sidebar">
 			<nav id="album-nav">
-				{% for album in album_list %}
+				{% for album in albums %}
 					<a class="nav-link" href="#{{ album.index  }}-1">{{ album.title }}</a>
 				{% endfor %}
-				<a class="nav-link" href="#1-1">Example Album #1</a>
-				<a class="nav-link" href="#2-1">Example Album #2</a>
-				<a class="nav-link" href="#3-1">Example Album #3</a>
-				<a class="nav-link" href="#4-1">Example Album #4</a>
-				<a class="nav-link" href="#5-1">Example Album #5</a>
-				<a class="nav-link" href="#6-1">Example Album #6</a>
-				<a class="nav-link" href="#7-1">Example Album #7</a>
-				<a class="nav-link" href="#8-1">Example Album #8</a>
 				<a class="nav-link last" href="#about">About ITJL Photography</a>
 			</nav>
 		</section>

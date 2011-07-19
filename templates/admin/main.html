@@ -20,7 +20,8 @@
 		<ul id="a_sortable">
 		{% for album in albums %}
 			<li id="{{ album.dbKey }}" class="ui-state-default"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
-				<a href="#" onclick="return openAlbum('{{ album.dbKey }}')">{{ album.title }}</a>
+				{{ album.title }}
+				<a href="#" onclick="return openAlbum('{{ album.dbKey }}')">*Open Album*</a>
 				<a href="#" onclick="return removeAlbum('{{ album.dbKey }}')">*Remove Album*</a>
 			</li>
 		{% endfor %}

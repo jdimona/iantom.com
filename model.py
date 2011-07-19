@@ -42,8 +42,8 @@ class Photo(dbRoot):
     textOnly = db.BooleanProperty()
     index = db.IntegerProperty()
     @classmethod
-    def new(cls, newImage, newCaption, newTextOnly, newIndex):
-        super(Album, cls).new(image = newImage, caption = newCaption, textOnly = newTextOnly, index = newIndex)
+    def new(cls, newCaption, newTextOnly, newIndex, newImage = None):
+        super(Photo, cls).new(caption = newCaption, textOnly = newTextOnly, index = newIndex, image = newImage)
     
 
 
@@ -64,7 +64,7 @@ class RPCMethods(rpc.RPCMethods):
     
     def get_photo(self, sess, album, index):
         return "hi", 10
-
+    
 
 class RPC(rpc.RPCHandler):
     _m = RPCMethods

@@ -15,7 +15,7 @@ function $ajax(mod_name, fname, arglist, callback) {
 
 jQuery(document).ready(function($) {
     function load(hash) {
-    	if(hash.localeCompare("main") == 0) {
+    	if(hash.localeCompare("main") === 0) {
     		$ajax('portfolio', 'get_main', [], function(html) {
     			$('#viewer').html(html);
     			if($('#bottom-bar').css('display') != "none") {
@@ -23,7 +23,7 @@ jQuery(document).ready(function($) {
     			}
     		});
     	} 
-    	else if(hash.localeCompare("about") == 0) {
+    	else if(hash.localeCompare("about") === 0) {
     		$ajax('portfolio', 'get_about', [], function(html) {
     			$('#viewer').html(html);
     			if($('#bottom-bar').css('display') != "none") {
@@ -55,7 +55,7 @@ jQuery(document).ready(function($) {
     }
 
     $.history.init(function(hash) {
-        load(hash == "" ? "main" : hash);
+        load(hash === "" ? "main" : hash);
     });
 
     $('#album-nav a').live('click', function(e) {
@@ -101,6 +101,25 @@ jQuery(document).ready(function($) {
     
     
     //// Slide Show UI ////
+    $('#next').mouseover(function(){
+    	$(this).stop().animate({
+    	    color: "#DEDEDE"
+    	}, {duration:150});
+    }).mouseout(function(){
+    	$(this).stop().animate({
+      	    color: "#BABABA"
+      	}, {duration:150});
+    });
+    
+    $('#prev').mouseover(function(){
+    	$(this).stop().animate({
+    	    color: "#DEDEDE"
+    	}, {duration:150});
+    }).mouseout(function(){
+    	$(this).stop().animate({
+      	    color: "#BABABA"
+      	}, {duration:150});
+    });
     
     
 });

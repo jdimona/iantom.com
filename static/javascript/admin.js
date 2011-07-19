@@ -13,6 +13,8 @@ function $ajax(mod_name, fname, arglist, callback) {
 
 
 //// Albums ////
+var albumkey_toremove = "";
+var photokey_toremove = "";
 function onAlbumLoad() {
     $("#albumPopup").dialog({
     	autoOpen: false,
@@ -26,7 +28,7 @@ function onAlbumLoad() {
 		modal: true,
 		buttons: {
 			"Delete all items": function() {
-				$ajax('admin', 'delete_album', [itemkey_toremove], function(ret){
+				$ajax('admin', 'delete_album', [albumkey_toremove], function(ret){
 					location.reload();
 				});
 			},
@@ -37,12 +39,6 @@ function onAlbumLoad() {
 	});
 }
 
-function newAlbum() {
-	$('#new-album-button').hide();
-	$('#albumPopup').dialog('option', 'buttons', { "Create": function() { albumCreate(); } });
-	$('#albumPopup').dialog( 'open' );
-}
-
 function albumCreate() {
 	var args = [$('#albumForm .album-title').val(), $('#albumForm .album-info').val()];
 	$ajax('admin', 'create_album', args, function(ret){
@@ -51,18 +47,53 @@ function albumCreate() {
 }
 
 
+function newAlbum() {
+	$('#new-album-button').hide();
+	$('#albumPopup').dialog('option', 'buttons', { "Create": function() { albumCreate(); } });
+	$('#albumPopup').dialog( 'open' );
+}
+
+
+
 function setAlbumOrder() {
 	var order = $('#a_sortable').sortable('toArray');
-	alert(order[0] + " " + order[1] + " " + order[2]);
 	$ajax('admin', 'set_album_order', [order], function(ret){
 		location.reload();
 	});
 }
 
-var itemkey_toremove = "";
 function removeAlbum(albumKey) {
 	$("#dialog-confirm").dialog( 'open' );
-	itemkey_toremove = albumKey;
+	albumkey_toremove = albumKey;
+}
+
+function  openAlbum(albumKey) {
+	$ajax('admin', 'show_album', [albumKey], function(html){
+		$('#album-listing').hide();
+		$('#album-display').html(html).show();
+		$("#slidePopup").dialog({
+	    	autoOpen: false,
+	    	width: 600,
+	    	close: function(event, ui) { $('#new-slide-button').show(); }
+	    });
+	    $( "#dialog-confirm-photo" ).dialog({
+	    	autoOpen: false,
+			resizable: false,
+			height:140,
+			modal: true,
+			buttons: {
+				"Delete item": function() {
+					$ajax('admin', 'delete_photo', [photokey_toremove, $('#album-to-add-to').val()], function(ret){
+						location.reload();
+					});
+				},
+				Cancel: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+		$('#album-to-add-to').val(albumKey);
+	});
 }
 
 		
@@ -70,6 +101,8 @@ jQuery(document).ready(function($) {
 	$(function() {
 			$( "#a_sortable" ).sortable();
 			$( "#a_sortable" ).disableSelection();
+			$( "#b_sortable" ).sortable();
+			$( "#b_sortable" ).disableSelection();
 	});
 	
 	
@@ -78,3 +111,26 @@ jQuery(document).ready(function($) {
 
 
 //// Slides ////
+function newSlide() {
+	$('#new-slide-button').hide();
+	$('#slidePopup').dialog();
+	$('#slidePopup').dialog( 'open' );
+}
+
+
+
+function setPhotoOrder() {
+	var order = $('#b_sortable').sortable('toArray');
+	$ajax('admin', 'set_photo_order', [order], function(ret){
+		location.reload();
+	});
+}
+
+function removeSlide(photoKey) {
+	photokey_toremove = photoKey;
+	$("#dialog-confirm-photo").dialog( 'open' );
+}
+
+
+
+
