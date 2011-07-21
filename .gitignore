@@ -40,4 +40,5 @@ index.yaml
 ehthumbs.db
 Icon?
 Thumbs.db
-
+.pydevproject
+.project
