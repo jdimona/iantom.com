@@ -58,7 +58,7 @@ class RPCMethods(rpc.RPCMethods):
                                        'textOnly': photo.textOnly,
                                        'caption': photo.caption, 
                                        'dbKey': photo.dbKey, 
-                                       'picUrl': images.get_serving_url(photo.image, 150)
+                                       'picUrl': images.get_serving_url(photo.image, 120)
                                        })
         templ = sess.template_path('templates/admin/album-display.html')
         html = template.render(templ, {'slides': photo_list, 'upload_url': upload_url})
@@ -69,10 +69,9 @@ class RPCMethods(rpc.RPCMethods):
         photo = model.Photo.get(photoKey)
         blobstore.BlobInfo.get(photo.image.key()).delete()
         db.delete(photoKey)
-        logging.debug('Photo Key: %s, album.photos[0]: %s', photoKey, album.photos[0])
         newPhotos = []
         for photo in album.photos:
-            if photo != photoKey:
+            if str(photo) != str(photoKey):
                 newPhotos.append(photo)
         
         album.photos = newPhotos
@@ -80,7 +79,10 @@ class RPCMethods(rpc.RPCMethods):
         album.put()
         if album.numPhotos > 0:
             photos = sorted(model.Photo.get(album.photos), key=lambda photo: photo.index)
-            return self.set_photo_order(sess, photos)
+            photoKeys = []
+            for pic in photos:
+                photoKeys.append(pic.dbKey)
+            return self.set_photo_order(sess, photoKeys)
         return ["ok"]
     
     def set_photo_order(self, sess, order):
