@@ -22,6 +22,8 @@ jQuery(document).ready(function($) {
     
     $('#viewer').height(viewerHeight);
     $('#viewer').width(viewerWidth);
+    $('#viewer-wrapper').height(viewerHeight);
+    $('#viewer-wrapper').width(viewerWidth);
     
     $(window).resize(function() {
     	windowHeight = $(window).height();
@@ -31,6 +33,8 @@ jQuery(document).ready(function($) {
         
         $('#viewer').height(viewerHeight);
         $('#viewer').width(viewerWidth);
+        $('#viewer-wrapper').height(viewerHeight);
+    	$('#viewer-wrapper').width(viewerWidth);
     });
     
     function load(hash) {
@@ -53,10 +57,24 @@ jQuery(document).ready(function($) {
     	else {
     		var hashArr = hash.split("-");
     		$ajax('portfolio', 'get_photo', [hashArr[0], hashArr[1], viewerWidth, viewerHeight], function(ret) {
+    			$('#viewer').hide()
+    			$('#viewer-wrapper').addClass('loading');
     			html = ret[0];
     			currentPhoto = parseInt(ret[1]);
     			numPhotos = parseInt(ret[2]);
     			$('#viewer').html(html);
+    			$('#viewer').find('img')
+				    // once the image has loaded, execute this code
+				    .load(function () {
+				    
+				      // with the holding div #loader, apply:
+				      $('#viewer-wrapper')
+				        // remove the loading class (so no background spinner), 
+				        .removeClass('loading');
+				      // fade our image in to create a nice effect
+				      $('#viewer').fadeIn(500);
+				    });
+				    
     			$('#current-picture-index').html(currentPhoto + 1);
     			$('#total-pictures').html(numPhotos);
     			$('#prev').attr('href', '#' + hashArr[0] + '-' + (currentPhoto - 1));

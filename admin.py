@@ -114,6 +114,7 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
             model.Photo.new(caption, textOnly, index)
         else:
             textOnly = False
+            portrait = False
             if self.request.get('portrait') == "true":
                 portrait = True
             upload_files = self.get_uploads('file')

@@ -56,7 +56,7 @@ class RPCMethods(rpc.RPCMethods):
     def get_main(self, sess):
         templ = sess.template_path('templates/photo.html')
         html = template.render(templ, {})
-        return html
+        return ""
     
     def get_about(self, sess):
         templ = sess.template_path('templates/text.html')

@@ -78,11 +78,30 @@ h1 {
 
 
 #viewer {
+	margin: none;
+	padding: none;
+	top:0px;
+	left: 0px;
+	position: absolute;
+}
+
+#viewer-wrapper {
 	position: absolute;
 	left:300px;
 	top:75px;
 }
 
+#viewer img {
+	display: block;
+	max-height: 100%;
+	max-width: 100%;
+	margin: auto;
+}
+
+
+.loading {
+	background: url(/static/images/ajax-loader.gif) no-repeat center center;
+}
 
 
 
