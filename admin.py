@@ -114,10 +114,12 @@ class UploadHandler(blobstore_handlers.BlobstoreUploadHandler):
             model.Photo.new(caption, textOnly, index)
         else:
             textOnly = False
+            if self.request.get('portrait') == "true":
+                portrait = True
             upload_files = self.get_uploads('file')
             blob_info = upload_files[0]
             image = blob_info.key()
-            model.Photo.new(caption, textOnly, index, image)
+            model.Photo.new(caption, textOnly, index, image, portrait)
             
         photo = model.Photo.all().order('-index').get()
         album.photos.append(photo.key())

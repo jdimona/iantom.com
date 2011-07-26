@@ -61,21 +61,20 @@ h1 {
 	text-align: center;
 }
 
-#controls .disabled{
-	pointer-events: none;
-	cursor: default;
-	color: #8C8C8C;
-}
 
 #controls a{
 	text-decoration: none;
-	color: #BABABA;
 	padding-right:10px;
 	padding-left:10px;
+	color: #BABABA;
 }
 
 
-
+#controls .disabled{
+	pointer-events: none;
+	cursor: default;
+	color: #636363;
+}
 
 
 #viewer {

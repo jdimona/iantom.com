@@ -38,12 +38,13 @@ class Album(dbRoot):
     
 class Photo(dbRoot):
     image = blobstore.BlobReferenceProperty()
+    portrait = db.BooleanProperty()
     caption = db.StringProperty()
     textOnly = db.BooleanProperty()
     index = db.IntegerProperty()
     @classmethod
-    def new(cls, newCaption, newTextOnly, newIndex, newImage = None):
-        super(Photo, cls).new(caption = newCaption, textOnly = newTextOnly, index = newIndex, image = newImage)
+    def new(cls, newCaption, newTextOnly, newIndex, newImage = None, newPortrait = False):
+        super(Photo, cls).new(caption = newCaption, textOnly = newTextOnly, index = newIndex, image = newImage, portrait = newPortrait)
     
 
 
@@ -62,8 +63,27 @@ class RPCMethods(rpc.RPCMethods):
         html = template.render(templ, {})
         return html
     
-    def get_photo(self, sess, album, index):
-        return "hi", 10
+    def get_photo(self, sess, albumIndex, photoIndex, width, height):
+        album = Album.all().filter('index = ', int(albumIndex)).get()
+        if len(album.photos) == 0:
+            return "", int(photoIndex), album.numPhotos
+        photo = Photo.get(album.photos[int(photoIndex)])
+        
+        if photo.textOnly:
+            templ = sess.template_path('templates/text.html')
+            html = template.render(templ, {'photo': photo})
+            return html, int(photoIndex), album.numPhotos
+        
+        photoData = {}
+        
+        if photo.portrait:
+            photoData = {'caption': photo.caption, 'image': images.get_serving_url(photo.image, int(height))}
+        else:
+            photoData = {'caption': photo.caption, 'image': images.get_serving_url(photo.image, int(width))}
+            
+        templ = sess.template_path('templates/photo.html')
+        html = template.render(templ, {'photo': photoData})
+        return html, int(photoIndex), album.numPhotos
     
 
 class RPC(rpc.RPCHandler):

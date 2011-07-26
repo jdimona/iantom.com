@@ -14,6 +14,25 @@ function $ajax(mod_name, fname, arglist, callback) {
 
 
 jQuery(document).ready(function($) {
+	    //// Viewer Setup ////
+    var windowHeight = $(window).height();
+    var windowWidth = $(window).width();
+    var viewerHeight = windowHeight - 150;
+    var viewerWidth = windowWidth - 340;
+    
+    $('#viewer').height(viewerHeight);
+    $('#viewer').width(viewerWidth);
+    
+    $(window).resize(function() {
+    	windowHeight = $(window).height();
+        windowWidth = $(window).width();
+        viewerHeight = windowHeight - 150;
+        viewerWidth = windowWidth - 340;
+        
+        $('#viewer').height(viewerHeight);
+        $('#viewer').width(viewerWidth);
+    });
+    
     function load(hash) {
     	if(hash.localeCompare("main") === 0) {
     		$ajax('portfolio', 'get_main', [], function(html) {
@@ -33,20 +52,40 @@ jQuery(document).ready(function($) {
     	}
     	else {
     		var hashArr = hash.split("-");
-    		$ajax('portfolio', 'get_photo', [hashArr[0], hashArr[1]], function(ret) {
+    		$ajax('portfolio', 'get_photo', [hashArr[0], hashArr[1], viewerWidth, viewerHeight], function(ret) {
     			html = ret[0];
-    			numPhotos = ret[1];
+    			currentPhoto = parseInt(ret[1]);
+    			numPhotos = parseInt(ret[2]);
     			$('#viewer').html(html);
-    			$('#current-picture-index').html(hashArr[1]);
+    			$('#current-picture-index').html(currentPhoto + 1);
     			$('#total-pictures').html(numPhotos);
-    			$('#prev').removeClass('disabled').attr('href', '#' + hashArr[0] + '-' + (parseInt(hashArr[1]) - 1));
-    			$('#next').removeClass('disabled').attr('href', '#' + hashArr[0] + '-' + (parseInt(hashArr[1]) + 1));
-    			if(hashArr[1] == 1) {
+    			$('#prev').attr('href', '#' + hashArr[0] + '-' + (currentPhoto - 1));
+    			$('#next').attr('href', '#' + hashArr[0] + '-' + (currentPhoto + 1));
+    			
+    			if(currentPhoto == 0) {
     				$('#prev').addClass('disabled');
+    				$('#prev').animate({
+    					color: '#636363'
+    				});
+    			} else if(currentPhoto){
+    				$('#prev').removeClass('disabled');
+    				$('#prev').animate({
+    					color: '#BABABA'
+    				});
     			}
-    			else if(hashArr[1] == numPhotos) {
+    			
+    			if(currentPhoto + 1 >= numPhotos) {
     				$('#next').addClass('disabled');
+    				$('#next').animate({
+    					color: '#636363'
+    				});
+    			} else {
+    				$('#next').removeClass('disabled');
+    				$('#next').animate({
+    					color: '#BABABA'
+    				});
     			}
+    			
     			if($('#bottom-bar').css('display') == "none") {
     				$('#bottom-bar').slideToggle(500);
     			}
@@ -66,33 +105,16 @@ jQuery(document).ready(function($) {
     });
     
     
-    //// Viewer Setup ////
-    var windowHeight = $(window).height();
-    var windowWidth = $(window).width();
-    var viewerHeight = windowHeight - 150;
-    var viewerWidth = windowWidth - 340;
-    
-    $('#viewer').height(viewerHeight);
-    $('#viewer').width(viewerWidth);
-    
-    $(window).resize(function() {
-    	windowHeight = $(window).height();
-        windowWidth = $(window).width();
-        viewerHeight = windowHeight - 150;
-        viewerWidth = windowWidth - 340;
-        
-        $('#viewer').height(viewerHeight);
-        $('#viewer').width(viewerWidth);
-    });
+
     
     
     //// Menu UI ////
-    $('.nav-link').mouseover(function(){
+    $('.nav-link').mouseenter(function(){
     	$(this).stop().animate({
     		backgroundColor: "#3D3D3D",
     	    color: "#7A7A7A"
     	}, {duration:150});
-    }).mouseout(function(){
+    }).mouseleave(function(){
     	$(this).stop().animate({
     		backgroundColor: "#000000",
       	    color: "#575757"
@@ -102,23 +124,31 @@ jQuery(document).ready(function($) {
     
     //// Slide Show UI ////
     $('#next').mouseover(function(){
-    	$(this).stop().animate({
-    	    color: "#DEDEDE"
-    	}, {duration:150});
+    	if(!$('#next').hasClass('disabled')) {
+			$(this).stop().animate({
+			    color: "#DEDEDE"
+			}, {duration:150});
+		}
     }).mouseout(function(){
-    	$(this).stop().animate({
-      	    color: "#BABABA"
-      	}, {duration:150});
+    	if(!$('#next').hasClass('disabled')) {
+	    	$(this).stop().animate({
+	      	    color: "#BABABA"
+	      	}, {duration:150});
+      }
     });
     
     $('#prev').mouseover(function(){
-    	$(this).stop().animate({
-    	    color: "#DEDEDE"
-    	}, {duration:150});
+    	if(!$('#prev').hasClass('disabled')) {
+	    	$(this).stop().animate({
+	    	    color: "#DEDEDE"
+	    	}, {duration:150});
+	    }
     }).mouseout(function(){
-    	$(this).stop().animate({
-      	    color: "#BABABA"
-      	}, {duration:150});
+    	if(!$('#prev').hasClass('disabled')) {
+	    	$(this).stop().animate({
+	    		color: "#BABABA"
+	      	}, {duration:150});
+      }
     });
     
     
