@@ -63,18 +63,23 @@ jQuery(document).ready(function($) {
     			currentPhoto = parseInt(ret[1]);
     			numPhotos = parseInt(ret[2]);
     			$('#viewer').html(html);
-    			$('#viewer').find('img')
-				    // once the image has loaded, execute this code
-				    .load(function () {
-				    
-				      // with the holding div #loader, apply:
-				      $('#viewer-wrapper')
-				        // remove the loading class (so no background spinner), 
-				        .removeClass('loading');
-				      // fade our image in to create a nice effect
-				      $('#viewer').fadeIn(500);
-				    });
-				    
+    			if(ret[4]) {
+	    			$('#viewer').find('img')
+					    // once the image has loaded, execute this code
+					    .load(function () {
+					    
+					      // with the holding div #loader, apply:
+					      $('#viewer-wrapper')
+					        // remove the loading class (so no background spinner), 
+					        .removeClass('loading');
+					      // fade our image in to create a nice effect
+					      $('#viewer').fadeIn(500);
+					    });
+				} else {
+					$('#slide-text').css('padding-top', ((viewerHeight/2) - 50) + 'px')
+					$('#viewer-wrapper').removeClass('loading');
+					$('#viewer').fadeIn(500);
+				}  
     			$('#current-picture-index').html(currentPhoto + 1);
     			$('#total-pictures').html(numPhotos);
     			$('#prev').attr('href', '#' + hashArr[0] + '-' + (currentPhoto - 1));

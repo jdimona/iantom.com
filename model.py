@@ -72,18 +72,17 @@ class RPCMethods(rpc.RPCMethods):
         if photo.textOnly:
             templ = sess.template_path('templates/text.html')
             html = template.render(templ, {'photo': photo})
-            return html, int(photoIndex), album.numPhotos
+            return html, int(photoIndex), album.numPhotos, photo.caption, False
         
-        photoData = {}
-        
+        imageUrl = ''
         if photo.portrait:
-            photoData = {'caption': photo.caption, 'image': images.get_serving_url(photo.image, int(height))}
+            imageUrl = images.get_serving_url(photo.image, int(height))
         else:
-            photoData = {'caption': photo.caption, 'image': images.get_serving_url(photo.image, int(width))}
+            imageUrl = images.get_serving_url(photo.image, int(width))
             
         templ = sess.template_path('templates/photo.html')
-        html = template.render(templ, {'photo': photoData})
-        return html, int(photoIndex), album.numPhotos
+        html = template.render(templ, {'imageUrl': imageUrl})
+        return html, int(photoIndex), album.numPhotos, photo.caption, True
     
 
 class RPC(rpc.RPCHandler):
